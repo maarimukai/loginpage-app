@@ -1,23 +1,32 @@
 <template>
   <main>
-    <div id="firstSection">
+    <form id="firstSection" @submit.prevent="handleSubmit(!v$.$invalid)" >
       <img class="logo" alt="Grab Logo" src="./assets/logo-grab.svg">
       <div class="loginSection">
-        <span class="p-input-icon-left">
-            <i class="pi pi-at"/>
-            <InputText class="inputs" type="text" v-model="value" placeholder="" />
-        </span>
+
+        <div class="field">
+            <div class="p-float-label p-input-icon-left">
+                <i class="pi pi-at"/>
+                <InputText class="inputs" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"/>
+            </div>
+            <span v-if="v$.email.$error && submitted">
+                <span id="email-error" v-for="(error, index) of v$.email.$errors" :key="index">
+                  <small class="p-error">{{error.$message}}</small>
+                </span>
+            </span>
+            <small v-else-if="(v$.email.$invalid && submitted) || v$.email.$pending.$response" class="p-error">{{v$.email.required.$message.replace('Value', 'Email')}}</small>
+        </div>
         <span class="p-input-icon-left">
             <i class="pi pi-lock"/>
             <InputText class="inputs" type="password" v-model="password" placeholder="" />
         </span>
-        <Button label="Submit" class="btn"/>
+        <Button type="submit" label="Submit" class="btn"/>
         <div class="aptag">
             <p>problems to get in?</p>
             <a href=""><strong>click here</strong></a>
         </div>
       </div>
-    </div>
+    </form>
     <div>
       <img class="imageSection" src="./assets/undraw_interview_rmcf.svg" alt="Interview">
     </div>
@@ -25,13 +34,72 @@
 </template>
 
 <script>
+import { email, required } from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
+
 export default {
-  data() {
-    return {
-      value: "",
-      password: ""
+    setup: () => ({ v$: useVuelidate() }),
+    data() {
+        return {
+            name: '',
+            email: '',
+            password: '',
+            date: null,
+            country: null,
+            accept: null,
+            submitted: false,
+            countries: null,
+            showMessage: false
+        }
+    },
+    validations() {
+        return {
+            name: {
+                required
+            },
+            email: {
+                required,
+                email
+            },
+            password: {
+                required
+            },
+            accept: {
+                required
+            }
+        }
+    },
+    created() {
+    },
+    mounted() {
+    },
+    methods: {
+        handleSubmit(isFormValid) {
+            this.submitted = true;
+
+            if (!isFormValid) {
+                return;
+            }
+
+            this.toggleDialog();
+        },
+        toggleDialog() {
+            this.showMessage = !this.showMessage;
+        
+            if(!this.showMessage) {
+                this.resetForm();
+            }
+        },
+        resetForm() {
+            this.name = '';
+            this.email = '';
+            this.password = '';
+            this.date = null;
+            this.country = null;
+            this.accept = null;
+            this.submitted = false;
+        }
     }
-  }
 }
 </script>
 
@@ -65,15 +133,26 @@ export default {
   margin-bottom: 80px
 }
 
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
 .p-input-icon-left {
   margin: 5px;
 }
 
 .inputs {
   background-color: #4E5BEE !important;
-  border: 2px solid #F8F8F8 !important;
-  border-radius: 15px !important;
+  border: 2px solid #F8F8F8;
+  border-radius: 20px !important;
   width: 250px;
+  color: #F8F8F8 !important;
+}
+
+small {
+  color: #F8F8F8 !important;
+  margin-left: 15px;
 }
 
 i {
