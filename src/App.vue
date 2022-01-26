@@ -46,7 +46,6 @@ export default {
             accept: null,
             submitted: false,
             showMessage: false,
-            emailValidation: false,
         }
     },
     validations() {
@@ -100,6 +99,10 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 #firstSection {
   display: flex;
   flex-direction: column;
@@ -107,7 +110,7 @@ export default {
   align-items: center;
   background-color: #4E5BEE;
   width: 550px;
-  height: 640px;
+  height: 100vh;
   position: absolute;
 }
 
@@ -179,11 +182,10 @@ a {
 }
 
 .imageSection {
-  /* 1084.140x758.562 */
-  width: 924.14px;
-  height: 598.562px;
-  margin-left: 350px;
-  margin-top: 30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10vh;
 }
 
 </style>
