@@ -6,7 +6,7 @@
 
         <div class="field">
             <div class="p-float-label p-input-icon-left">
-                <i class="pi pi-at"/>
+                <i class="pi pi-at"></i>
                 <InputText class="inputs" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"/>
             </div>
             <span v-if="v$.email.$error && submitted">
@@ -41,22 +41,16 @@ export default {
     setup: () => ({ v$: useVuelidate() }),
     data() {
         return {
-            name: '',
             email: '',
             password: '',
-            date: null,
-            country: null,
             accept: null,
             submitted: false,
-            countries: null,
-            showMessage: false
+            showMessage: false,
+            emailValidation: false,
         }
     },
     validations() {
         return {
-            name: {
-                required
-            },
             email: {
                 required,
                 email
@@ -91,11 +85,8 @@ export default {
             }
         },
         resetForm() {
-            this.name = '';
             this.email = '';
             this.password = '';
-            this.date = null;
-            this.country = null;
             this.accept = null;
             this.submitted = false;
         }
