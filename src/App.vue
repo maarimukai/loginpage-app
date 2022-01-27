@@ -1,36 +1,27 @@
 <template>
-  <main>
-    <form id="firstSection" @submit.prevent="handleSubmit(!v$.$invalid)" >
-      <img class="logo" alt="Grab Logo" src="./assets/logo-grab.svg">
-      <div class="loginSection">
-
-        <div class="field">
+    <main>
+        <form id="firstSection" @submit.prevent="handleSubmit(!v$.$invalid)" >
+            <img class="logo" alt="Grab Logo" src="./assets/logo-grab.svg">
             <div class="p-float-label p-input-icon-left">
                 <i class="pi pi-at"></i>
                 <InputText class="inputs" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"/>
             </div>
             <span v-if="v$.email.$error && submitted">
                 <span id="email-error" v-for="(error, index) of v$.email.$errors" :key="index">
-                  <small class="p-error">{{error.$message}}</small>
+                    <small class="p-error">{{error.$message}}</small>
                 </span>
             </span>
             <small v-else-if="(v$.email.$invalid && submitted) || v$.email.$pending.$response" class="p-error">{{v$.email.required.$message.replace('Value', 'Email')}}</small>
-        </div>
-        <span class="p-input-icon-left">
-            <i class="pi pi-lock"/>
-            <InputText class="inputs" type="password" v-model="password" placeholder="" />
-        </span>
-        <Button type="submit" label="Submit" class="btn"/>
-        <div class="aptag">
+            <span class="p-input-icon-left">
+                <i class="pi pi-lock"/>
+                <InputText class="inputs" type="password" v-model="password" placeholder="" />
+            </span>
+            <Button type="submit" label="Submit" class="btn"/>
             <p>problems to get in?</p>
             <a href=""><strong>click here</strong></a>
-        </div>
-      </div>
-    </form>
-    <div>
-      <img class="imageSection" src="./assets/undraw_interview_rmcf.svg" alt="Interview">
-    </div>
-  </main>
+        </form>
+        <img class="imageSection" src="./assets/undraw_interview_rmcf.svg" alt="Interview">
+    </main>
 </template>
 
 <script>
@@ -57,23 +48,14 @@ export default {
             password: {
                 required
             },
-            accept: {
-                required
-            }
         }
-    },
-    created() {
-    },
-    mounted() {
     },
     methods: {
         handleSubmit(isFormValid) {
             this.submitted = true;
-
             if (!isFormValid) {
                 return;
             }
-
             this.toggleDialog();
         },
         toggleDialog() {
@@ -86,7 +68,6 @@ export default {
         resetForm() {
             this.email = '';
             this.password = '';
-            this.accept = null;
             this.submitted = false;
         }
     }
@@ -95,9 +76,6 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Roboto:wght@400;700&display=swap');
-#app {
-  font-family: Roboto, sans-serif;
-}
 
 body {
   margin: 0;
@@ -108,28 +86,17 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #4E5BEE;
-  width: 550px;
-  height: 100vh;
   position: absolute;
-}
-
-.loginSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-color: #4E5BEE;
+  width: 38vw;
+  height: 100%;
 }
 
 .logo {
   width: 160px;
   height: 63.2px;
   margin-top: 80px;
-  margin-bottom: 80px
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 80px;
 }
 
 .p-input-icon-left {
@@ -163,29 +130,24 @@ i {
   color: #605f6f !important;
 }
 
-.aptag {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 70px;
-  font-size: 12px;
-}
-
 p {
   color: #F8F8F8;
-  margin: 5px;
+  margin-top: 5rem;
+  margin-bottom: 0;
+  font-size: 0.9rem;
 }
 
 a {
   color: #F8F8F8;
   text-decoration: none;
+  font-size: 0.75rem;
 }
 
 .imageSection {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 10vh;
+  height: 99vh;
+  margin-left: 25vw;
+  padding-top: 2vh;
 }
+
 
 </style>
